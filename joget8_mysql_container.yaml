@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  joget8db:
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: jwdb
+      MYSQL_USER: joget
+      MYSQL_PASSWORD: joget
+      MYSQL_DATABASE: jwdb
+
+  joget8:
+    image: jogetworkflow/joget-enterprise
+    ports:
+      - 8080:8080
+    environment:
+      MYSQL_HOST: joget8db
+      MYSQL_DATABASE: jwdb
+      MYSQL_PORT: 3306
+      MYSQL_USER: joget
+      MYSQL_PASSWORD: joget
+    volumes:
+      - joget8data:/opt/joget/wflow
+    depends_on:
+      - joget8db
